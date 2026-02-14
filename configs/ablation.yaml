@@ -1,0 +1,55 @@
+# Ablation study configuration - baseline without scale attention
+
+# Random seed for reproducibility
+seed: 42
+
+# Data configuration
+data_root: ./data/cityscapes
+num_synthetic_samples: 200
+batch_size: 4
+num_workers: 4
+image_size: [512, 1024]
+
+# Model configuration - ABLATION: disable scale attention
+model:
+  encoder_name: resnet50
+  pretrained: true
+  num_classes: 19
+  num_scales: 4
+  use_scale_attention: false  # Disabled for ablation
+  use_aux_head: true
+
+# Loss configuration - no scale prediction loss
+loss:
+  aux_weight: 0.4
+  scale_weight: 0.0  # Disabled since no scale attention
+  ignore_index: 255
+
+# Training configuration
+epochs: 50
+learning_rate: 0.001
+weight_decay: 0.0001
+optimizer: adamw
+grad_clip: 1.0
+use_amp: true
+
+# Learning rate scheduler
+scheduler:
+  type: cosine
+  warmup_epochs: 5
+  min_lr: 0.00001
+
+# Early stopping
+patience: 10
+min_delta: 0.001
+
+# Checkpointing
+checkpoint_dir: ./checkpoints_ablation
+save_frequency: 5
+
+# Logging
+log_interval: 10
+use_mlflow: false
+
+# Device
+device: cuda

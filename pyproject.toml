@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adaptive-scale-fusion-urban-segmentation"
+version = "0.1.0"
+description = "Multi-scale semantic segmentation for urban scenes with adaptive feature fusion"
+authors = [{name = "Alireza Shojaei"}]
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+keywords = ["deep-learning", "computer-vision", "semantic-segmentation", "attention-mechanism", "urban-scene-understanding"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "timm>=0.9.0",
+    "albumentations>=1.3.0",
+    "numpy>=1.24.0",
+    "pillow>=9.5.0",
+    "pyyaml>=6.0",
+    "matplotlib>=3.7.0",
+    "scikit-learn>=1.3.0",
+    "tqdm>=4.65.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "mlflow>=2.8.0",
+]
+
+[tool.setuptools]
+packages = ["adaptive_scale_fusion_urban_segmentation"]
+package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--strict-markers --cov=adaptive_scale_fusion_urban_segmentation --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/tests/*", "*/conftest.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
