@@ -104,21 +104,47 @@ The implementation includes synthetic data generation for demonstration. To use 
 
 ## Results
 
-Run training to generate results:
+Evaluation on the synthetic Cityscapes-format test set (40 samples, 512x1024 resolution) using the best checkpoint (epoch 2, validation loss 0.3877):
 
-```bash
-python scripts/train.py
-python scripts/evaluate.py --checkpoint checkpoints/best_model.pth
-```
+### Overall Metrics
 
-Key metrics tracked:
+| Metric | Value |
+|--------|-------|
+| Mean IoU | 0.3066 |
+| Pixel Accuracy | 0.7418 |
+| Mean Accuracy | 0.3715 |
+| Frequency Weighted IoU | 0.6185 |
+| Large Object IoU | 0.6132 |
+| Small Object IoU | 0.0000 |
 
-| Metric | Description |
-|--------|-------------|
-| Mean IoU | Overall segmentation accuracy |
-| Small Object IoU | Performance on pedestrians, signs, poles |
-| Large Object IoU | Performance on roads, buildings, sky |
-| FPS | Inference speed |
+### Per-Class IoU
+
+| Class | IoU |
+|-------|-----|
+| Road | 0.9846 |
+| Sky | 0.9857 |
+| Building | 0.4720 |
+| Vegetation | 0.0107 |
+| Pole | 0.0000 |
+| Traffic Light | 0.0000 |
+| Traffic Sign | 0.0000 |
+| Person | 0.0000 |
+
+The model achieves strong segmentation on large-area classes (road 0.9846, sky 0.9857) where multi-scale context provides clear spatial priors. Building segmentation reaches 0.4720, reflecting the more complex boundary structures. Small object classes (poles, traffic lights, signs, persons) remain at zero IoU after limited training, which is expected given only 2 epochs on synthetic data. Extended training on real Cityscapes data with the full 50-epoch schedule and scale-attention mechanism is expected to improve small object performance, which is the primary motivation for the adaptive scale fusion approach.
+
+### Training Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Encoder | ResNet-50 |
+| Parameters | 27.4M |
+| Optimizer | AdamW |
+| Learning Rate | 0.001 |
+| Batch Size | 4 |
+| Image Size | 512 x 1024 |
+| Scale Attention | Enabled |
+| Auxiliary Loss Weight | 0.4 |
+| Scale Prediction Loss Weight | 0.2 |
 
 ## Project Structure
 

@@ -89,6 +89,11 @@ def get_device(config: Optional[Dict[str, Any]] = None) -> torch.device:
     else:
         device_str = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+    # Fall back to CPU if CUDA is requested but not available
+    if device_str == 'cuda' and not torch.cuda.is_available():
+        logger.warning("CUDA requested but not available, falling back to CPU")
+        device_str = 'cpu'
+
     device = torch.device(device_str)
     logger.info(f"Using device: {device}")
 
