@@ -1,0 +1,49 @@
+{
+  "project": "adaptive-scale-fusion-urban-segmentation",
+  "description": "Multi-scale semantic segmentation for urban scenes using adaptive feature fusion with learned scale-attention",
+  "dataset": "Cityscapes (synthetic, 40 samples, 512x1024)",
+  "overall_metrics": {
+    "mean_iou": 0.30662142077258525,
+    "pixel_accuracy": 0.7418109893798828,
+    "mean_accuracy": 0.37152327723424416,
+    "freq_weighted_iou": 0.6184542060384945,
+    "large_object_iou": 0.6132428415451705,
+    "small_object_iou": 0.0
+  },
+  "per_class_iou": {
+    "road": 0.9846156851154382,
+    "sidewalk": null,
+    "building": 0.4719939408376596,
+    "wall": null,
+    "fence": null,
+    "pole": 0.0,
+    "traffic_light": 0.0,
+    "traffic_sign": 0.0,
+    "vegetation": 0.010652281299292759,
+    "terrain": null,
+    "sky": 0.9857094589282912,
+    "person": 0.0,
+    "rider": null,
+    "car": null,
+    "truck": null,
+    "bus": null,
+    "train": null,
+    "motorcycle": null,
+    "bicycle": null
+  },
+  "inference": {
+    "fps": 0.47522655363084404,
+    "avg_inference_time_seconds": 8.417038083076477
+  },
+  "training_summary": {
+    "epochs": 2,
+    "best_val_loss": 0.3877,
+    "encoder": "ResNet-50",
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "batch_size": 4,
+    "image_size": [512, 1024]
+  },
+  "config_file": "configs/default.yaml",
+  "checkpoint_file": "checkpoints/best_model.pth"
+}
